@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const router = useRouter()
+const route = useRoute()
 const job = reactive([
   {
     id: 1,
@@ -98,83 +99,133 @@ const job = reactive([
     ],
   },
 ])
-
-const toDetail = (index: number) => {
-  router.push({
-    path: '/detail',
-    query: {
-      index,
-    },
-  })
-}
+const jobInfo = reactive(job[(route.query.index) as any - 1])
+// /*const otherJob = computed(() => {
+//   return job.filter(item => item.id !== Number(route.query.index))
+// })
+// const toDetail = (index: number) => {
+//   router.push({
+//     path: '/detail',
+//     query: {
+//       index,
+//     },
+//   })
+// }*/
 </script>
 
 <template>
-  <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
-    <van-swipe-item>1</van-swipe-item>
-    <van-swipe-item>2</van-swipe-item>
-    <van-swipe-item>3</van-swipe-item>
-  </van-swipe>
-  <div class="job-container">
-    <div class="job-title">
-      招新岗位及要求
-    </div>
-    <div>
-      <div v-for="it in job" :key="it.id" class="job-box" @click="toDetail(it.id)">
-        <div class="job-container-name">
-          <span>{{ it.name }}</span>
+  <div class="detail-container">
+    <div class="jobInfo-container">
+          <div class="jobInfo-container-name">
+            <span>{{ jobInfo.name }}</span>
+          </div>
+          <div class="jobInfo-container-tags">
+            <span>{{ jobInfo.grade }}</span>
+            <span>{{ jobInfo.collect }}</span>
+          </div>
+          <div class="jobInfo-introduce">
+            岗位介绍
+          </div>
+          <div class="jobInfo-block">
+            <div v-for="introduce in jobInfo.introduce" :key="introduce" class="jobInfo-container-introduce">
+              <span>{{ introduce }}</span>
+            </div>
+          </div>
+          <div class="jobInfo-introduce">
+            岗位要求
+          </div>
+          <div class="jobInfo-block">
+            <div v-for="demand in jobInfo.demand" :key="demand" class="jobInfo-container-demand">
+              <span>{{ demand }}</span>
+            </div>
+          </div>
+          <div class="mt-2rem mb-1rem">
+            <van-button round type="primary">
+              <div class="w-8rem">
+                申请
+              </div>
+            </van-button>
+          </div>
         </div>
-        <div class="job-container-tags">
-          <span>{{ it.grade }}</span>
-          <span>{{ it.collect }}</span>
-        </div>
-        <div>
-          <div v-for="introduceItem in it.introduce" :key="introduceItem" class="job-container-introduce">
-            <span>{{ introduceItem }}</span>
+<!--    <div class="other-job-container">
+      <div class="jobInfo-container-name">
+        <span>其他岗位</span>
+      </div>
+      <van-divider />
+      <div>
+        <div v-for="it in otherJob" :key="it.id" class="job-box" @click="toDetail(it.id)">
+          <div class="job-container-name">
+            <span>{{ it.name }}</span>
+          </div>
+          <div class="job-container-tags">
+            <span>{{ it.grade }}</span>
+            <span>{{ it.collect }}</span>
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <style scoped>
-.my-swipe .van-swipe-item {
-  color: #fff;
-  font-size: 20px;
-  line-height: 340px;
-  width: 100vw;
-  text-align: center;
-  background-color: #39a9ed;
+.detail-container {
+  width: 80vw;
+  margin: 0 auto;
+  display: flex;
 }
-.job-container {
-  margin: 3rem auto 0;
-  width: 60vw;
+.jobInfo-container {
+  border-radius: 0.5rem;
+  padding: 2rem;
+  /*box-shadow: 0px 2px 10px rgb(54 97 174 / 10%);*/
+  width: 66%;
 }
-.job-title {
-  color: #1f2329;
-  font-weight: 600;
-  font-size: 2rem;
-  padding: 1rem 2rem;
-}
-.job-box {
-  padding: 1rem 2rem;
-}
-.job-box:hover {
-  box-shadow: 0 8px 24px 0 rgb(187 191 196 / 20%);
-}
-.job-container-name {
+.jobInfo-container-name {
   color: #1f2329;
   font-weight: 600;
   font-size: 1.5rem;
   margin: 0.5rem 0 ;
 }
-.job-container-tags {
+.jobInfo-container-tags {
+  color: #8f959e;
   margin: 0rem 0rem 0.75rem;
 }
-.job-container-introduce {
+.jobInfo-introduce::before {
+  display: inline;
+  content: '';
+  border-left: 4px #3370ff solid;
+  height: 20px;
+  margin-right: 0.5rem;
+}
+.jobInfo-introduce {
+  color: #1f2329;
+  font-weight: 600;
+  font-size: 1rem;
+  margin: 2rem 0 1rem 0;
+}
+.jobInfo-container-introduce {
   color: #8f959e;
   line-height: 1.5rem;
   font-size: 0.875rem;
+}
+.jobInfo-container-demand {
+  color: #8f959e;
+  line-height: 1.5rem;
+  font-size: 0.875rem;
+}
+.other-job-container {
+  width: 33%;
+  border-radius: 0.5rem;
+  padding: 2rem;
+  margin-left: 2rem;
+  box-shadow: 0px 2px 10px rgb(54 97 174 / 10%);
+}
+.job-container-name {
+  color: #1f2329;
+  font-size: 1rem;
+  margin: 0.5rem 0 ;
+}
+.job-container-tags {
+  color: #8f959e;
+  margin: 0rem 0rem 0.75rem;
 }
 </style>

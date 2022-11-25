@@ -14,7 +14,7 @@
       </div>
     </div>
   </header>
-  <main class="main-container">
+  <main>
     <RouterView />
   </main>
 </template>
