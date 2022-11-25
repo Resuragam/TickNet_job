@@ -8,6 +8,8 @@ import generatedRoutes from '~pages'
 import '@unocss/reset/tailwind.css'
 import './styles/main.css'
 import 'uno.css'
+import 'vant/lib/index.css'
+import 'element-plus/dist/index.css'
 
 const routes = setupLayouts(generatedRoutes)
 
