@@ -145,22 +145,28 @@ const formData = reactive({
             </div>
             <div class="apply-info">
               <el-form-item label="姓名">
-                <el-input v-model="formData.name" />
+                <el-input v-model="formData.name" placeholder="请输入"/>
               </el-form-item>
               <el-form-item label="性别">
-                <el-input v-model="formData.sex" />
+                <el-radio-group v-model="formData.sex">
+                  <el-radio label="1" size="large">男</el-radio>
+                  <el-radio label="2" size="large">女</el-radio>
+                </el-radio-group>
               </el-form-item>
               <el-form-item label="年级">
-                <el-input v-model="formData.grade" />
+                <el-radio-group v-model="formData.grade">
+                  <el-radio label="1" size="large">22级</el-radio>
+                  <el-radio label="2" size="large">21级</el-radio>
+                </el-radio-group>
               </el-form-item>
               <el-form-item label="专业">
-                <el-input v-model="formData.major" />
+                <el-input v-model="formData.major" placeholder="请输入"/>
               </el-form-item>
               <el-form-item label="电话号码">
-                <el-input v-model="formData.phone" />
+                <el-input v-model="formData.phone" placeholder="请输入"/>
               </el-form-item>
               <el-form-item label="邮箱">
-                <el-input v-model="formData.email" />
+                <el-input v-model="formData.email" placeholder="请输入"/>
               </el-form-item>
             </div>
           </div>
@@ -170,7 +176,7 @@ const formData = reactive({
             </div>
             <div class="apply-info">
               <el-form-item label="加入原因" prop="reason">
-                <el-input v-model="formData.reason" type="textarea" :rows="10"/>
+                <el-input v-model="formData.reason" type="textarea" :rows="10" placeholder="请输入"/>
               </el-form-item>
             </div>
           </div>
@@ -180,7 +186,7 @@ const formData = reactive({
             </div>
             <div class="apply-info">
               <el-form-item label="自我介绍" prop="introduce">
-                <el-input v-model="formData.introduce" type="textarea" :rows="10"/>
+                <el-input v-model="formData.introduce" type="textarea" :rows="10" placeholder="请输入"/>
               </el-form-item>
             </div>
           </div>
@@ -202,7 +208,7 @@ const formData = reactive({
 .jobInfo-container-name {
   color: #1f2329;
   font-weight: 600;
-  font-size: 2rem;
+  font-size: 1.5rem;
   margin: 0.5rem 0 ;
 }
 .apply-info-box {
@@ -216,6 +222,13 @@ const formData = reactive({
   font-weight: bold;
   font-size: 1.25rem;
 }
+.apply-info-title::before {
+  display: inline;
+  content: '';
+  border-left: 4px #3370ff solid;
+  height: 20px;
+  margin-right: 0.5rem;
+}
 .apply-info {
   width: 45vw;
 }
@@ -223,11 +236,28 @@ const formData = reactive({
   font-weight: bold;
   color: #121212;
 }
-:deep(.el-form-item__content) {
-  justify-content: flex-end;
-}
 .apply-button-box {
   width: 80vw;
   padding: 4rem 0 10rem;
+}
+
+@media screen and (max-width: 768px) {
+  .apply-container {
+    width: 100vw;
+    padding: 2rem;
+  }
+  .apply-info {
+    width: 100%;
+  }
+  .apply-info-box {
+    padding: 2rem 0;
+    display: block;
+    width: 100%;
+    border-bottom: 1px solid #e6e6e6
+  }
+  .apply-info-title {
+    margin-bottom: 1rem;
+    width: 100%;
+  }
 }
 </style>
