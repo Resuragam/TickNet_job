@@ -5,7 +5,7 @@ const job = reactive([
     id: 1,
     name: '实习生',
     grade: '22级',
-    collect: '研发组、运营组',
+    collect: '研发组 | 运营组',
     demand: [
       '1.热衷于技术的学习',
       '2.利用闲暇时间充实自己',
@@ -185,5 +185,18 @@ const toDetail = (index: number) => {
   color: #8f959e;
   line-height: 1.5rem;
   font-size: 0.875rem;
+}
+
+@media screen and (max-width: 768px) {
+  .job-container {
+    margin: 0 auto;
+    width: 100vw;
+  }
+  .job-title {
+    border-bottom: 1px solid #e8e8e8;
+  }
+  .job-box {
+    border-bottom: 1px solid #e8e8e8;
+  }
 }
 </style>

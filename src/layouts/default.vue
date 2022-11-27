@@ -2,7 +2,6 @@
 const route = useRoute()
 const router = useRouter()
 const activeIndex = ref(route.path)
-console.log(route.path)
 const handleSelect = (key: string, keyPath: string[]) => {
   router.push(key)
 }
@@ -64,10 +63,21 @@ const isMobileNavbarShow = ref(false)
 :deep(.van-nav-bar) {
   display: none;
 }
-
+:deep(.van-popup ) {
+  display: none;
+}
+:deep(.van-overlay) {
+  display: none;
+}
 @media screen and (max-width: 768px) {
   :deep(.el-menu) {
     display: none;
+  }
+  :deep(.van-overlay) {
+    display: block;
+  }
+  :deep(.van-popup ) {
+    display: block;
   }
   :deep(.van-nav-bar) {
     display: block;
