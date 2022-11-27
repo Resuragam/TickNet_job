@@ -48,7 +48,7 @@ const isMobileNavbarShow = ref(false)
       </div>
     </van-popup>
   </header>
-  <main class="bg-neutral-50">
+  <main class="bg-neutral-50 min-h-full">
     <RouterView />
   </main>
 </template>
