@@ -4,8 +4,9 @@ const job = reactive([
   {
     id: 1,
     name: '实习生',
-    grade: '22级',
-    collect: '研发组 | 运营组',
+    grade: ['22级'],
+    isDevelop: true,
+    isOperate: true,
     demand: [
       '1.热衷于技术的学习',
       '2.利用闲暇时间充实自己',
@@ -20,8 +21,9 @@ const job = reactive([
   {
     id: 2,
     name: '初级前端开发工程师',
-    grade: '21级、22级',
-    collect: '研发组',
+    grade: ['21级', '22级'],
+    isDevelop: true,
+    isOperate: false,
     demand: [
       '1.熟悉HTML/CSS/JavaScript',
       '2.有Node.js/Vue.js/React.js/Augular.js、小程序学习经验之一优先',
@@ -35,8 +37,9 @@ const job = reactive([
   {
     id: 3,
     name: '初级后端开发工程师',
-    grade: '21级、22级',
-    collect: '研发组',
+    grade: ['21级', '22级'],
+    isDevelop: true,
+    isOperate: false,
     demand: [
       '1.良好的代码风格和编码品味',
       '2.较好的产品意识，愿意将产品效果作为工作最重要的驱动因素',
@@ -52,8 +55,9 @@ const job = reactive([
   {
     id: 4,
     name: '新媒体编辑',
-    grade: '21-22级',
-    collect: '运营组',
+    grade: ['21级', '22级'],
+    isDevelop: false,
+    isOperate: true,
     demand: [
       '1.具有原创能力',
       '2.对Ps等主流图形编辑软件感兴趣',
@@ -68,8 +72,9 @@ const job = reactive([
   {
     id: 5,
     name: '策划',
-    grade: '21-22级',
-    collect: '运营组',
+    grade: ['21级', '22级'],
+    isDevelop: false,
+    isOperate: true,
     demand: [
       '1.熟练掌握office办公软件',
       '2.有一定的文案撰写能力',
@@ -82,8 +87,9 @@ const job = reactive([
   {
     id: 6,
     name: '产品经理',
-    grade: '21级',
-    collect: '研发',
+    grade: ['21级', '22级'],
+    isDevelop: false,
+    isOperate: true,
     demand: [
       '1.对互联网产品设计感兴趣',
       '2.有互联网创新思维',
@@ -110,10 +116,13 @@ const toDetail = (index: number) => {
 </script>
 
 <template>
-  <el-carousel indicator-position="outside" height="300px">
+  <el-carousel indicator-position="outside">
     <el-carousel-item></el-carousel-item>
     <el-carousel-item></el-carousel-item>
   </el-carousel>
+  <div class="ticknet-img">
+    <img src="/ticknet.png">
+  </div>
   <div class="job-container">
     <div class="job-title">
       招新岗位及要求
@@ -124,8 +133,15 @@ const toDetail = (index: number) => {
           <span>{{ it.name }}</span>
         </div>
         <div class="job-container-tags">
-          <span>{{ it.grade }}</span>
-          <span>{{ it.collect }}</span>
+          <van-tag v-for="gradeItem in it.grade" :key="gradeItem" type="primary" size="large" plain class="mr-1rem">
+            {{ gradeItem }}
+          </van-tag>
+          <van-tag v-if="it.isDevelop" type="primary" size="large" plain class="mr-1rem" >
+            研发组
+          </van-tag>
+          <van-tag v-if="it.isOperate" type="primary" size="large" plain class="mr-1rem" >
+            运营组
+          </van-tag>
         </div>
         <div>
           <div v-for="introduceItem in it.introduce" :key="introduceItem" class="job-container-introduce">
@@ -138,14 +154,6 @@ const toDetail = (index: number) => {
 </template>
 
 <style scoped>
-.my-swipe .van-swipe-item {
-  color: #fff;
-  font-size: 20px;
-  line-height: 340px;
-  width: 100vw;
-  text-align: center;
-  background-color: #39a9ed;
-}
 :deep(.el-carousel__item:nth-child(3) ) {
   background-image: url("/swiper2.png");
   background-size: cover;
@@ -186,8 +194,13 @@ const toDetail = (index: number) => {
   line-height: 1.5rem;
   font-size: 0.875rem;
 }
-
+.ticknet-img {
+  display: none;
+}
 @media screen and (max-width: 768px) {
+  :deep(.el-carousel--horizontal) {
+    display: none !important;
+  }
   .job-container {
     margin: 0 auto;
     width: 100vw;
@@ -197,6 +210,18 @@ const toDetail = (index: number) => {
   }
   .job-box {
     border-bottom: 1px solid #e8e8e8;
+  }
+  .ticknet-img {
+    display: block;
+  }
+  :deep(.el-carousel__item) {
+    display: none;
+  }
+  :deep(.el-carousel__container) {
+    display: none;
+  }
+  :deep(.el-carousel__indicators) {
+    display: none;
   }
 }
 </style>

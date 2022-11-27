@@ -5,8 +5,9 @@ const job = reactive([
   {
     id: 1,
     name: '实习生',
-    grade: '22级',
-    collect: '研发组、运营组',
+    grade: ['22级'],
+    isDevelop: true,
+    isOperate: true,
     demand: [
       '1.热衷于技术的学习',
       '2.利用闲暇时间充实自己',
@@ -21,8 +22,9 @@ const job = reactive([
   {
     id: 2,
     name: '初级前端开发工程师',
-    grade: '21级、22级',
-    collect: '研发组',
+    grade: ['21级', '22级'],
+    isDevelop: true,
+    isOperate: false,
     demand: [
       '1.熟悉HTML/CSS/JavaScript',
       '2.有Node.js/Vue.js/React.js/Augular.js、小程序学习经验之一优先',
@@ -36,8 +38,9 @@ const job = reactive([
   {
     id: 3,
     name: '初级后端开发工程师',
-    grade: '21级、22级',
-    collect: '研发组',
+    grade: ['21级', '22级'],
+    isDevelop: true,
+    isOperate: false,
     demand: [
       '1.良好的代码风格和编码品味',
       '2.较好的产品意识，愿意将产品效果作为工作最重要的驱动因素',
@@ -53,8 +56,9 @@ const job = reactive([
   {
     id: 4,
     name: '新媒体编辑',
-    grade: '21-22级',
-    collect: '运营组',
+    grade: ['21级', '22级'],
+    isDevelop: false,
+    isOperate: true,
     demand: [
       '1.具有原创能力',
       '2.对Ps等主流图形编辑软件感兴趣',
@@ -69,8 +73,9 @@ const job = reactive([
   {
     id: 5,
     name: '策划',
-    grade: '21-22级',
-    collect: '运营组',
+    grade: ['21级', '22级'],
+    isDevelop: false,
+    isOperate: true,
     demand: [
       '1.熟练掌握office办公软件',
       '2.有一定的文案撰写能力',
@@ -83,8 +88,9 @@ const job = reactive([
   {
     id: 6,
     name: '产品经理',
-    grade: '21级',
-    collect: '研发',
+    grade: ['21级', '22级'],
+    isDevelop: false,
+    isOperate: true,
     demand: [
       '1.对互联网产品设计感兴趣',
       '2.有互联网创新思维',
@@ -130,8 +136,17 @@ const toApply = () => {
         <span>{{ jobInfo.name }}</span>
       </div>
       <div class="jobInfo-container-tags">
-        <span>{{ jobInfo.grade }}</span>
-        <span>{{ jobInfo.collect }}</span>
+        <div class="job-container-tags">
+          <van-tag v-for="gradeItem in jobInfo.grade" :key="gradeItem" type="primary" size="large" plain class="mr-1rem">
+            {{ gradeItem }}
+          </van-tag>
+          <van-tag v-if="jobInfo.isDevelop" type="primary" size="large" plain class="mr-1rem" >
+            研发组
+          </van-tag>
+          <van-tag v-if="jobInfo.isOperate" type="primary" size="large" plain class="mr-1rem" >
+            运营组
+          </van-tag>
+        </div>
       </div>
       <div class="jobInfo-introduce">
         岗位介绍
@@ -168,8 +183,15 @@ const toApply = () => {
             <span>{{ it.name }}</span>
           </div>
           <div class="job-container-tags">
-            <span>{{ it.grade }}</span>
-            <span>{{ it.collect }}</span>
+            <van-tag v-for="gradeItem in it.grade" :key="gradeItem" type="primary" size="large" plain class="mr-1rem">
+              {{ gradeItem }}
+            </van-tag>
+            <van-tag v-if="it.isDevelop" type="primary" size="large" plain class="mr-1rem" >
+              研发组
+            </van-tag>
+            <van-tag v-if="it.isOperate" type="primary" size="large" plain class="mr-1rem" >
+              运营组
+            </van-tag>
           </div>
           <div>
             <div v-for="introduceItem in it.introduce" :key="introduceItem" class="job-container-introduce">
@@ -253,7 +275,7 @@ const toApply = () => {
     width: 100vw;
   }
   :deep(.el-divider--horizontal) {
-    width: 80%;
+    width: 80vw;
     margin: 0 auto;
   }
 }
