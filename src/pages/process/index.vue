@@ -19,6 +19,7 @@
     </div>
     <div class="flex justify-center items-center" >
       <van-icon name="arrow" size="30"/>
+      <van-icon name="arrow-down" size="30"/>
     </div>
     <div class="process-item">
       <img src="/write.png" width="100">
@@ -31,6 +32,7 @@
     </div>
     <div class="flex justify-center items-center" >
       <van-icon name="arrow" size="30"/>
+      <van-icon name="arrow-down" size="30"/>
     </div>
     <div class="process-item">
       <img src="/face.png" width="100">
@@ -43,6 +45,7 @@
     </div>
     <div class="flex justify-center items-center" >
       <van-icon name="arrow" size="30"/>
+      <van-icon name="arrow-down" size="30"/>
     </div>
     <div class="process-item">
       <img src="/finish.png" width="100">
@@ -87,12 +90,26 @@
   height: 200px;
   align-items: center;
 }
+:deep(.van-icon-arrow-down) {
+  display: none;
+}
 @media screen and (max-width: 768px) {
   .img-container {
     display: none;
   }
   .img {
     display: block;
+  }
+  .process-container {
+    width: 200px;
+    flex-wrap: wrap;
+  }
+  :deep(.van-icon-arrow) {
+    display: none;
+  }
+  :deep(.van-icon-arrow-down) {
+    display: block;
+    margin: 1rem 0;
   }
 }
 </style>
