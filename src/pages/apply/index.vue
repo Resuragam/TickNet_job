@@ -1,5 +1,4 @@
 <script setup lang="ts">
-const router = useRouter()
 const route = useRoute()
 const job = reactive([
   {
@@ -100,140 +99,135 @@ const job = reactive([
   },
 ])
 const jobInfo = reactive(job[(route.query.index) as any - 1])
-// /*const otherJob = computed(() => {
-//   return job.filter(item => item.id !== Number(route.query.index))
-// })
-// const toDetail = (index: number) => {
-//   router.push({
-//     path: '/detail',
-//     query: {
-//       index,
-//     },
-//   })
-// }*/
-const toApply = () => {
-  router.push({
-    path: '/apply',
-    query: {
-      index: route.query.index,
-    },
-  })
-}
+
+const formData = reactive({
+  name: '',
+  sex: '',
+  number: '',
+  grade: '',
+  major: '',
+  phone: '',
+  email: '',
+  post: '',
+  reason: '',
+  introduce: '',
+})
 </script>
 
 <template>
-  <div class="detail-container">
-    <div class="jobInfo-container">
+  <div class="w-full h-full">
+    <div class="apply-container">
       <div class="jobInfo-container-name">
         <span>{{ jobInfo.name }}</span>
       </div>
-      <div class="jobInfo-container-tags">
-        <span>{{ jobInfo.grade }}</span>
-        <span>{{ jobInfo.collect }}</span>
-      </div>
-      <div class="jobInfo-introduce">
-        岗位介绍
-      </div>
-      <div class="jobInfo-block">
-        <div v-for="introduce in jobInfo.introduce" :key="introduce" class="jobInfo-container-introduce">
-          <span>{{ introduce }}</span>
+      <div class="mt-1rem">
+        <div v-if="jobInfo.id === 1">
+          <van-tag type="primary" size="large" plain class="mr-1rem">
+            研发组
+          </van-tag>
+          <van-tag type="primary" size="large" plain>
+            运营组
+          </van-tag>
         </div>
-      </div>
-      <div class="jobInfo-introduce">
-        岗位要求
-      </div>
-      <div class="jobInfo-block">
-        <div v-for="demand in jobInfo.demand" :key="demand" class="jobInfo-container-demand">
-          <span>{{ demand }}</span>
+        <div v-else>
+          <van-tag type="primary" size="large" plain>
+            {{ jobInfo.collect }}
+          </van-tag>
         </div>
-      </div>
-      <div class="mt-2rem mb-1rem">
-        <van-button round type="primary" @click="toApply()">
-          <div class="w-8rem">
-            申请
+        <el-form
+          label-position="top"
+          label-width="100px"
+          style="max-width: 460px"
+        >
+          <div class="apply-info-box">
+            <div class="apply-info-title">
+              基本信息
+            </div>
+            <div class="apply-info">
+              <el-form-item label="姓名">
+                <el-input v-model="formData.name" />
+              </el-form-item>
+              <el-form-item label="性别">
+                <el-input v-model="formData.sex" />
+              </el-form-item>
+              <el-form-item label="年级">
+                <el-input v-model="formData.grade" />
+              </el-form-item>
+              <el-form-item label="专业">
+                <el-input v-model="formData.major" />
+              </el-form-item>
+              <el-form-item label="电话号码">
+                <el-input v-model="formData.phone" />
+              </el-form-item>
+              <el-form-item label="邮箱">
+                <el-input v-model="formData.email" />
+              </el-form-item>
+            </div>
           </div>
-        </van-button>
+          <div class="apply-info-box">
+            <div class="apply-info-title">
+              加入原因
+            </div>
+            <div class="apply-info">
+              <el-form-item label="加入原因" prop="reason">
+                <el-input v-model="formData.reason" type="textarea" :rows="10"/>
+              </el-form-item>
+            </div>
+          </div>
+          <div class="apply-info-box">
+            <div class="apply-info-title">
+              自我介绍
+            </div>
+            <div class="apply-info">
+              <el-form-item label="自我介绍" prop="introduce">
+                <el-input v-model="formData.introduce" type="textarea" :rows="10"/>
+              </el-form-item>
+            </div>
+          </div>
+          <el-form-item class="apply-button-box">
+            <el-button type="primary" @click="onSubmit" round>提交申请</el-button>
+            <el-button round>重置表单</el-button>
+          </el-form-item>
+        </el-form>
       </div>
     </div>
-    <!--    <div class="other-job-container">
-      <div class="jobInfo-container-name">
-        <span>其他岗位</span>
-      </div>
-      <van-divider />
-      <div>
-        <div v-for="it in otherJob" :key="it.id" class="job-box" @click="toDetail(it.id)">
-          <div class="job-container-name">
-            <span>{{ it.name }}</span>
-          </div>
-          <div class="job-container-tags">
-            <span>{{ it.grade }}</span>
-            <span>{{ it.collect }}</span>
-          </div>
-        </div>
-      </div>
-    </div> -->
   </div>
 </template>
 
 <style scoped>
-.detail-container {
+.apply-container {
   width: 80vw;
-  margin: 0 auto;
-  display: flex;
-}
-.jobInfo-container {
-  border-radius: 0.5rem;
-  padding: 2rem;
-  /*box-shadow: 0px 2px 10px rgb(54 97 174 / 10%);*/
-  width: 66%;
+  margin: 0 auto 3rem;
 }
 .jobInfo-container-name {
   color: #1f2329;
   font-weight: 600;
-  font-size: 1.5rem;
+  font-size: 2rem;
   margin: 0.5rem 0 ;
 }
-.jobInfo-container-tags {
-  color: #8f959e;
-  margin: 0rem 0rem 0.75rem;
+.apply-info-box {
+  padding: 2rem 0 2rem;
+  display: flex;
+  width: 80vw;
+  border-bottom: 1px solid #e6e6e6
 }
-.jobInfo-introduce::before {
-  display: inline;
-  content: '';
-  border-left: 4px #3370ff solid;
-  height: 20px;
-  margin-right: 0.5rem;
+.apply-info-title {
+  width: 20vw;
+  font-weight: bold;
+  font-size: 1.25rem;
 }
-.jobInfo-introduce {
-  color: #1f2329;
-  font-weight: 600;
-  font-size: 1rem;
-  margin: 2rem 0 1rem 0;
+.apply-info {
+  width: 45vw;
 }
-.jobInfo-container-introduce {
-  color: #8f959e;
-  line-height: 1.5rem;
-  font-size: 0.875rem;
+:deep(.el-form-item__label) {
+  font-weight: bold;
+  color: #121212;
 }
-.jobInfo-container-demand {
-  color: #8f959e;
-  line-height: 1.5rem;
-  font-size: 0.875rem;
+:deep(.el-form-item__content) {
+  justify-content: flex-end;
 }
-.other-job-container {
-  width: 33%;
-  border-radius: 0.5rem;
-  padding: 2rem;
-  margin-left: 2rem;
-  box-shadow: 0px 2px 10px rgb(54 97 174 / 10%);
-}
-.job-container-name {
-  color: #1f2329;
-  font-size: 1rem;
-  margin: 0.5rem 0 ;
-}
-.job-container-tags {
-  color: #8f959e;
-  margin: 0rem 0rem 0.75rem;
+.apply-button-box {
+  width: 80vw;
+  padding: 4rem 0 10rem;
 }
 </style>
