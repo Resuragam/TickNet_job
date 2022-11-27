@@ -110,11 +110,10 @@ const toDetail = (index: number) => {
 </script>
 
 <template>
-  <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
-    <van-swipe-item>1</van-swipe-item>
-    <van-swipe-item>2</van-swipe-item>
-    <van-swipe-item>3</van-swipe-item>
-  </van-swipe>
+  <el-carousel indicator-position="outside" height="300px">
+    <el-carousel-item></el-carousel-item>
+    <el-carousel-item></el-carousel-item>
+  </el-carousel>
   <div class="job-container">
     <div class="job-title">
       招新岗位及要求
@@ -146,6 +145,16 @@ const toDetail = (index: number) => {
   width: 100vw;
   text-align: center;
   background-color: #39a9ed;
+}
+:deep(.el-carousel__item:nth-child(3) ) {
+  background-image: url("../../public/swiper2.png");
+  background-size: cover;
+  background-position: center;
+}
+:deep(.el-carousel__item:nth-child(4) ) {
+  background-image: url("../../public/swiper3.png");
+  background-size: cover;
+  background-position: center;
 }
 .job-container {
   margin: 3rem auto 0;
