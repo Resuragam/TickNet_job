@@ -99,18 +99,20 @@ const job = reactive([
     ],
   },
 ])
-const jobInfo = reactive(job[(route.query.index) as any - 1])
-// /*const otherJob = computed(() => {
-//   return job.filter(item => item.id !== Number(route.query.index))
-// })
-// const toDetail = (index: number) => {
-//   router.push({
-//     path: '/detail',
-//     query: {
-//       index,
-//     },
-//   })
-// }*/
+const jobInfo = computed(() => {
+  return job[(route.query.index) as any - 1]
+})
+const otherJob = computed(() => {
+  return job.filter(item => item.id !== Number(route.query.index))
+})
+const toDetail = (index: number) => {
+  router.push({
+    path: '/detail',
+    query: {
+      index,
+    },
+  })
+}
 const toApply = () => {
   router.push({
     path: '/apply',
@@ -155,11 +157,11 @@ const toApply = () => {
         </van-button>
       </div>
     </div>
-    <!--    <div class="other-job-container">
-      <div class="jobInfo-container-name">
-        <span>其他岗位</span>
-      </div>
-      <van-divider />
+    <el-divider border-style="dashed" />
+    <div class="jobInfo-introduce px-2rem">
+      其他岗位
+    </div>
+    <div class="other-job">
       <div>
         <div v-for="it in otherJob" :key="it.id" class="job-box" @click="toDetail(it.id)">
           <div class="job-container-name">
@@ -169,9 +171,14 @@ const toApply = () => {
             <span>{{ it.grade }}</span>
             <span>{{ it.collect }}</span>
           </div>
+          <div>
+            <div v-for="introduceItem in it.introduce" :key="introduceItem" class="job-container-introduce">
+              <span>{{ introduceItem }}</span>
+            </div>
+          </div>
         </div>
       </div>
-    </div> -->
+    </div>
   </div>
 </template>
 
@@ -179,13 +186,12 @@ const toApply = () => {
 .detail-container {
   width: 80vw;
   margin: 0 auto;
-  display: flex;
 }
 .jobInfo-container {
   border-radius: 0.5rem;
   padding: 2rem;
   /*box-shadow: 0px 2px 10px rgb(54 97 174 / 10%);*/
-  width: 66%;
+  width: 100%;
 }
 .jobInfo-container-name {
   color: #1f2329;
@@ -220,20 +226,35 @@ const toApply = () => {
   line-height: 1.5rem;
   font-size: 0.875rem;
 }
-.other-job-container {
-  width: 33%;
-  border-radius: 0.5rem;
-  padding: 2rem;
-  margin-left: 2rem;
-  box-shadow: 0px 2px 10px rgb(54 97 174 / 10%);
+.job-box {
+  padding: 1rem 2rem;
+}
+.job-box:hover {
+  box-shadow: 0 8px 24px 0 rgb(187 191 196 / 20%);
 }
 .job-container-name {
   color: #1f2329;
-  font-size: 1rem;
+  font-weight: 600;
+  font-size: 1.5rem;
   margin: 0.5rem 0 ;
 }
 .job-container-tags {
-  color: #8f959e;
   margin: 0rem 0rem 0.75rem;
+}
+.job-container-introduce {
+  color: #8f959e;
+  line-height: 1.5rem;
+  font-size: 0.875rem;
+}
+
+@media screen and (max-width: 768px) {
+  .detail-container {
+    margin: 0 auto;
+    width: 100vw;
+  }
+  :deep(.el-divider--horizontal) {
+    width: 80%;
+    margin: 0 auto;
+  }
 }
 </style>
