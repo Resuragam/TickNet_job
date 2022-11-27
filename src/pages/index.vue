@@ -147,12 +147,12 @@ const toDetail = (index: number) => {
   background-color: #39a9ed;
 }
 :deep(.el-carousel__item:nth-child(3) ) {
-  background-image: url("../../public/swiper2.png");
+  background-image: url("/swiper2.png");
   background-size: cover;
   background-position: center;
 }
 :deep(.el-carousel__item:nth-child(4) ) {
-  background-image: url("../../public/swiper3.png");
+  background-image: url("/swiper3.png");
   background-size: cover;
   background-position: center;
 }
