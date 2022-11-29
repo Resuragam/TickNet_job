@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import type { FormInstance, FormRules } from 'element-plus'
+import { ElMessage, ElMessageBox } from 'element-plus'
+import { findStatus, submitData } from '~/api'
 const route = useRoute()
 const job = reactive([
   {
@@ -118,6 +121,131 @@ const formData = reactive({
   reason: '',
   introduce: '',
 })
+
+const ruleFormRef = ref<FormInstance>()
+
+const rules = reactive<FormRules>({
+  name: [
+    { required: true, message: '请输入姓名', trigger: 'blur' },
+  ],
+  sex: [
+    { required: true, message: '请选择性别', trigger: 'change' },
+  ],
+  number: [
+    { required: true, message: '请输入学号', trigger: 'blur' },
+  ],
+  grade: [
+    { required: true, message: '请选择年级', trigger: 'change' },
+  ],
+  major: [
+    { required: true, message: '请输入专业', trigger: 'blur' },
+  ],
+  phone: [
+    { required: true, message: '请输入电话号码', trigger: 'blur' },
+  ],
+  email: [
+    { required: true, message: '请输入邮箱', trigger: 'blur' },
+  ],
+  reason: [
+    { required: true, message: '请输入加入原因', trigger: 'blur' },
+  ],
+  introduce: [
+    { required: true, message: '请输入自我介绍', trigger: 'blur' },
+  ],
+})
+
+const onSubmit = async (formEl: FormInstance | undefined) => {
+  if (!formEl)
+    return
+  await formEl.validate((valid, fields) => {
+    if (valid) {
+      findStatus({
+        number: formData.number,
+      }).then((res: any) => {
+        // console.log(res)
+        if (res.code === 300) {
+          submitData({
+            name: formData.name,
+            sex: formData.sex,
+            number: formData.number,
+            grade: formData.grade,
+            major: formData.major,
+            phone: formData.phone,
+            email: formData.email,
+            post: jobInfo.name,
+            reason: jobInfo.name,
+            introduce: formData.introduce,
+          }).then((res: any) => {
+            if (res.code === 200) {
+              ElMessage({
+                showClose: true,
+                message: res.msg,
+                type: 'success',
+              })
+            }
+            else {
+              ElMessage({
+                showClose: true,
+                message: res.msg,
+                type: 'warning',
+              })
+            }
+            console.warn(res, '提交成功')
+          })
+        }
+        else if (res.code === 301) {
+          ElMessage({
+            showClose: true,
+            message: res.msg,
+            type: 'warning',
+          })
+          ElMessageBox.confirm(
+            '是否覆盖之前的提交记录',
+            {
+              confirmButtonText: '确认',
+              cancelButtonText: '取消',
+              type: 'warning',
+            },
+          )
+            .then(() => {
+              submitData({
+                name: formData.name,
+                sex: formData.sex,
+                number: formData.number,
+                grade: formData.grade,
+                major: formData.major,
+                phone: formData.phone,
+                email: formData.email,
+                post: jobInfo.name,
+                reason: jobInfo.name,
+                introduce: formData.introduce,
+              }).then((res: any) => {
+                if (res.code === 200) {
+                  ElMessage({
+                    showClose: true,
+                    message: res.msg,
+                    type: 'success',
+                  })
+                }
+                else {
+                  ElMessage({
+                    showClose: true,
+                    message: res.msg,
+                    type: 'warning',
+                  })
+                }
+                console.warn(res, '提交成功')
+              })
+            })
+            .catch(() => {})
+        }
+      })
+    }
+    else {
+      console.warn('error submit!', fields)
+    }
+  })
+}
 </script>
 
 <template>
@@ -137,37 +265,43 @@ const formData = reactive({
           运营组
         </van-tag>
         <el-form
+          ref="ruleFormRef"
+          :model="formData"
           label-position="top"
           label-width="100px"
           style="max-width: 460px"
+          :rules="rules"
         >
           <div class="apply-info-box">
             <div class="apply-info-title">
               基本信息
             </div>
             <div class="apply-info">
-              <el-form-item label="姓名">
+              <el-form-item label="姓名" prop="name">
                 <el-input v-model="formData.name" placeholder="请输入"/>
               </el-form-item>
-              <el-form-item label="性别">
+              <el-form-item label="性别" prop="sex">
                 <el-radio-group v-model="formData.sex">
-                  <el-radio label="1" size="large">男</el-radio>
-                  <el-radio label="2" size="large">女</el-radio>
+                  <el-radio label="男" size="large">男</el-radio>
+                  <el-radio label="女" size="large">女</el-radio>
                 </el-radio-group>
               </el-form-item>
-              <el-form-item label="年级">
+              <el-form-item label="年级" prop="grade">
                 <el-radio-group v-model="formData.grade">
-                  <el-radio label="1" size="large">22级</el-radio>
-                  <el-radio label="2" size="large">21级</el-radio>
+                  <el-radio label="22级" size="large">22级</el-radio>
+                  <el-radio label="21级" size="large">21级</el-radio>
                 </el-radio-group>
               </el-form-item>
-              <el-form-item label="专业">
+              <el-form-item label="学号" prop="number">
+                <el-input v-model="formData.number" placeholder="请输入"/>
+              </el-form-item>
+              <el-form-item label="专业" prop="major">
                 <el-input v-model="formData.major" placeholder="请输入"/>
               </el-form-item>
-              <el-form-item label="电话号码">
+              <el-form-item label="电话号码" prop="phone">
                 <el-input v-model="formData.phone" placeholder="请输入"/>
               </el-form-item>
-              <el-form-item label="邮箱">
+              <el-form-item label="邮箱" prop="email">
                 <el-input v-model="formData.email" placeholder="请输入"/>
               </el-form-item>
             </div>
@@ -195,8 +329,8 @@ const formData = reactive({
             </div>
           </div>
           <el-form-item class="apply-button-box">
-            <el-button type="primary" @click="onSubmit" round>提交申请</el-button>
-            <el-button round>重置表单</el-button>
+            <el-button type="primary" round size="large" @click="onSubmit(ruleFormRef)" >提交申请</el-button>
+            <el-button round size="large">重置表单</el-button>
           </el-form-item>
         </el-form>
       </div>
