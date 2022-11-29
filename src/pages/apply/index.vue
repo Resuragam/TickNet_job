@@ -246,6 +246,11 @@ const onSubmit = async (formEl: FormInstance | undefined) => {
     }
   })
 }
+
+const resetForm = (formEl: FormInstance | undefined) => {
+  if (!formEl) return
+  formEl.resetFields()
+}
 </script>
 
 <template>
@@ -330,7 +335,7 @@ const onSubmit = async (formEl: FormInstance | undefined) => {
           </div>
           <el-form-item class="apply-button-box">
             <el-button type="primary" round size="large" @click="onSubmit(ruleFormRef)" >提交申请</el-button>
-            <el-button round size="large">重置表单</el-button>
+            <el-button round size="large" @click="resetForm(ruleFormRef)">重置表单</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -390,7 +395,7 @@ const onSubmit = async (formEl: FormInstance | undefined) => {
   .apply-container {
     width: 100vw;
   }
-  .tag1 {
+  .tag1:nth-child(1) {
     margin-left: 2rem;
   }
   .jobInfo-container-name {
@@ -411,6 +416,9 @@ const onSubmit = async (formEl: FormInstance | undefined) => {
   }
   :deep(.el-divider) {
     width: 100vw !important;
+  }
+  .apply-button-box {
+    margin-left: 2rem;
   }
 }
 </style>
