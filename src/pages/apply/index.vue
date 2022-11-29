@@ -121,13 +121,13 @@ const formData = reactive({
 </script>
 
 <template>
-  <div class="w-full h-full">
+  <div class="">
     <div class="apply-container">
       <div class="jobInfo-container-name">
         <span>{{ jobInfo.name }}</span>
       </div>
       <div class="mt-1rem">
-        <van-tag v-for="gradeItem in jobInfo.grade" :key="gradeItem" type="primary" size="large" plain class="mr-1rem">
+        <van-tag v-for="gradeItem in jobInfo.grade" :key="gradeItem" type="primary" size="large" plain class="mr-1rem tag1">
           {{ gradeItem }}
         </van-tag>
         <van-tag v-if="jobInfo.isDevelop" type="primary" size="large" plain class="mr-1rem" >
@@ -172,6 +172,7 @@ const formData = reactive({
               </el-form-item>
             </div>
           </div>
+          <el-divider border-style="dashed" />
           <div class="apply-info-box">
             <div class="apply-info-title">
               加入原因
@@ -182,6 +183,7 @@ const formData = reactive({
               </el-form-item>
             </div>
           </div>
+          <el-divider border-style="dashed" />
           <div class="apply-info-box">
             <div class="apply-info-title">
               自我介绍
@@ -207,17 +209,22 @@ const formData = reactive({
   width: 80vw;
   margin: 0 auto 3rem;
 }
+:deep(.el-form-item__label) {
+  font-size: 1rem;
+}
 .jobInfo-container-name {
   color: #1f2329;
   font-weight: 600;
   font-size: 1.5rem;
-  margin: 0.5rem 0 ;
+  padding: 2rem 0 0;
 }
 .apply-info-box {
-  padding: 2rem 0 2rem;
+  padding: 2rem 2rem;
   display: flex;
   width: 80vw;
-  border-bottom: 1px solid #e6e6e6
+  margin: 2rem 0;
+  background-color: #fff;
+  border-radius: 0.5rem;
 }
 .apply-info-title {
   width: 20vw;
@@ -242,24 +249,34 @@ const formData = reactive({
   width: 80vw;
   padding: 4rem 0 10rem;
 }
-
+:deep(.el-divider) {
+  width: 80vw !important;
+}
 @media screen and (max-width: 768px) {
   .apply-container {
     width: 100vw;
-    padding: 2rem;
+  }
+  .tag1 {
+    margin-left: 2rem;
+  }
+  .jobInfo-container-name {
+    padding: 2rem 2rem 0;
+    margin: 0;
   }
   .apply-info {
     width: 100%;
   }
   .apply-info-box {
-    padding: 2rem 0;
     display: block;
-    width: 100%;
-    border-bottom: 1px solid #e6e6e6
+    width: 100vw;
+    background-color: #fff;
   }
   .apply-info-title {
     margin-bottom: 1rem;
     width: 100%;
+  }
+  :deep(.el-divider) {
+    width: 100vw !important;
   }
 }
 </style>

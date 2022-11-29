@@ -125,6 +125,11 @@ const toDetail = (index: number) => {
   })
 }
 const toApply = () => {
+  window.scroll({
+    top: 0,
+    left: 0,
+    behavior: 'smooth',
+  })
   router.push({
     path: '/apply',
     query: {
