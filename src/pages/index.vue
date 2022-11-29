@@ -176,6 +176,9 @@ const toDetail = (index: number) => {
 }
 .job-box {
   padding: 1rem 2rem;
+  border-radius: 0.5rem;
+  margin: 1rem 0;
+  background-color: #fff;
 }
 .job-box:hover {
   box-shadow: 0 8px 24px 0 rgb(187 191 196 / 20%);
@@ -204,12 +207,6 @@ const toDetail = (index: number) => {
   .job-container {
     margin: 0 auto;
     width: 100vw;
-  }
-  .job-title {
-    border-bottom: 1px solid #e8e8e8;
-  }
-  .job-box {
-    border-bottom: 1px solid #e8e8e8;
   }
   .ticknet-img {
     display: block;

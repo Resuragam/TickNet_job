@@ -208,12 +208,14 @@ const toApply = () => {
 .detail-container {
   width: 80vw;
   margin: 0 auto;
+  padding: 2rem 0;
 }
 .jobInfo-container {
   border-radius: 0.5rem;
   padding: 2rem;
   /*box-shadow: 0px 2px 10px rgb(54 97 174 / 10%);*/
   width: 100%;
+  background-color: #fff;
 }
 .jobInfo-container-name {
   color: #1f2329;
@@ -250,6 +252,9 @@ const toApply = () => {
 }
 .job-box {
   padding: 1rem 2rem;
+  margin: 1rem 0;
+  background-color: #fff;
+  border-radius: 0.5rem;
 }
 .job-box:hover {
   box-shadow: 0 8px 24px 0 rgb(187 191 196 / 20%);
@@ -276,7 +281,7 @@ const toApply = () => {
   }
   :deep(.el-divider--horizontal) {
     width: 80vw;
-    margin: 0 auto;
+    margin: 2rem auto;
   }
 }
 </style>

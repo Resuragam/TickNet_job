@@ -48,6 +48,9 @@
 .intro-container {
   width: 80vw;
   margin: 0 auto;
+  background-color: #fff;
+  border-bottom: 0.5rem;
+  padding: 2rem;
 }
 .intro-container > div {
   line-height: 2.5rem;
@@ -58,6 +61,9 @@
   }
   .img {
     display: block;
+  }
+  .intro-container {
+    width: 100vw;
   }
 }
 </style>
