@@ -106,6 +106,11 @@ const job = reactive([
 ])
 
 const toDetail = (index: number) => {
+  window.scroll({
+    top: 0,
+    left: 0,
+    behavior: 'smooth',
+  })
   router.push({
     path: '/detail',
     query: {

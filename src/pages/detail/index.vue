@@ -112,6 +112,11 @@ const otherJob = computed(() => {
   return job.filter(item => item.id !== Number(route.query.index))
 })
 const toDetail = (index: number) => {
+  window.scroll({
+    top: 0,
+    left: 0,
+    behavior: 'smooth',
+  })
   router.push({
     path: '/detail',
     query: {

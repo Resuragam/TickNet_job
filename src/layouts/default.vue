@@ -76,6 +76,7 @@ const isMobileNavbarShow = ref(false)
 :deep(.van-overlay) {
   display: none;
 }
+
 @media screen and (max-width: 768px) {
   :deep(.el-menu) {
     display: none;
