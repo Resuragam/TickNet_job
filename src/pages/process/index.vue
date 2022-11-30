@@ -17,22 +17,20 @@
         申请岗位
       </div>
     </div>
-    <div class="flex justify-center items-center" >
+    <div class="flex justify-center items-center icon-container" >
       <van-icon name="arrow" size="30"/>
-      <van-icon name="arrow-down" size="30"/>
     </div>
     <div class="process-item">
       <img src="/write.png" width="100">
       <div class="mt-1rem">
-        12月8日开始
+        12月8日
       </div>
       <div class="mt-1rem font-bold">
-        准备笔试
+        进行笔试
       </div>
     </div>
-    <div class="flex justify-center items-center" >
+    <div class="flex justify-center items-center icon-container" >
       <van-icon name="arrow" size="30"/>
-      <van-icon name="arrow-down" size="30"/>
     </div>
     <div class="process-item">
       <img src="/face.png" width="100">
@@ -40,12 +38,11 @@
         12月9日
       </div>
       <div class="mt-1rem font-bold">
-        准备面试
+        进行面试
       </div>
     </div>
-    <div class="flex justify-center items-center" >
+    <div class="flex justify-center items-center icon-container" >
       <van-icon name="arrow" size="30"/>
-      <van-icon name="arrow-down" size="30"/>
     </div>
     <div class="process-item">
       <img src="/finish.png" width="100">
@@ -86,12 +83,9 @@
   justify-content: center;
   flex-direction: column;
   text-align: center;
-  width: 200px;
-  height: 200px;
+  /*width: 200px;*/
+  /*height: 200px;*/
   align-items: center;
-}
-:deep(.van-icon-arrow-down) {
-  display: none;
 }
 @media screen and (max-width: 768px) {
   .img-container {
@@ -101,15 +95,17 @@
     display: block;
   }
   .process-container {
-    width: 200px;
-    flex-wrap: wrap;
+    width: 100vw;
   }
-  :deep(.van-icon-arrow) {
+  :deep(.icon-container) {
     display: none;
   }
-  :deep(.van-icon-arrow-down) {
-    display: block;
-    margin: 1rem 0;
+  .process-item {
+    margin-bottom: 2rem;
+  }
+  .process-container {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 </style>

@@ -50,6 +50,7 @@ const isMobileNavbarShow = ref(false)
   </header>
   <main class="bg-neutral-50 min-h-full">
     <RouterView />
+    <footer class="h-50px"></footer>
   </main>
 </template>
 

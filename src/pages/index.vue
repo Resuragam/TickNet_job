@@ -4,9 +4,9 @@ const job = reactive([
   {
     id: 1,
     name: '实习生',
-    grade: ['22级'],
+    grade: ['21级', '22级'],
     isDevelop: true,
-    isOperate: true,
+    isOperate: false,
     demand: [
       '1.热衷于技术的学习',
       '2.利用闲暇时间充实自己',

@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import type { FormInstance, FormRules } from 'element-plus'
-import { ElMessage, ElMessageBox } from 'element-plus'
 import { Dialog, Toast } from 'vant'
 import { findStatus, submitData } from '~/api'
+// import onSubmitTest from '../../../src/utils/test'
 const route = useRoute()
 const job = reactive([
   {
     id: 1,
     name: '实习生',
-    grade: ['22级'],
+    grade: ['21级', '22级'],
     isDevelop: true,
-    isOperate: true,
+    isOperate: false,
     demand: [
       '1.热衷于技术的学习',
       '2.利用闲暇时间充实自己',
@@ -165,7 +165,6 @@ const onSubmit = async (formEl: FormInstance | undefined) => {
       findStatus({
         number: formData.number,
       }).then((res: any) => {
-        console.warn('检测结果', res)
         if (res.code === 300) {
           submitData({
             name: formData.name,
@@ -176,12 +175,11 @@ const onSubmit = async (formEl: FormInstance | undefined) => {
             phone: formData.phone,
             email: formData.email,
             post: jobInfo.name,
-            reason: jobInfo.name,
+            reason: formData.reason,
             introduce: formData.introduce,
           }).then((res: any) => {
-            if (res.code === 200) {
+            if (res.code === 200)
               Toast.success('提交成功')
-            }
             else
               Toast.fail(res.msg)
           })
@@ -199,7 +197,7 @@ const onSubmit = async (formEl: FormInstance | undefined) => {
               phone: formData.phone,
               email: formData.email,
               post: jobInfo.name,
-              reason: jobInfo.name,
+              reason: formData.reason,
               introduce: formData.introduce,
             }).then((res: any) => {
               if (res.code === 200)
@@ -211,9 +209,7 @@ const onSubmit = async (formEl: FormInstance | undefined) => {
         }
       })
     }
-    else {
-      console.warn('error submit!', fields)
-    }
+    else { /* empty */ }
   })
 }
 
@@ -254,7 +250,7 @@ const resetForm = (formEl: FormInstance | undefined) => {
             </div>
             <div class="apply-info">
               <el-form-item label="姓名" prop="name">
-                <el-input v-model="formData.name" placeholder="请输入" />
+                <el-input v-model="formData.name" placeholder="请输入" maxlength="10"/>
               </el-form-item>
               <el-form-item label="性别" prop="sex">
                 <el-radio-group v-model="formData.sex">
@@ -279,14 +275,14 @@ const resetForm = (formEl: FormInstance | undefined) => {
               <el-form-item label="学号" prop="number">
                 <el-input v-model="formData.number" placeholder="请输入" />
               </el-form-item>
-              <el-form-item label="专业" prop="major">
-                <el-input v-model="formData.major" placeholder="请输入" />
+              <el-form-item label="专业" prop="major" >
+                <el-input v-model="formData.major" placeholder="请输入" maxlength="30"/>
               </el-form-item>
               <el-form-item label="电话号码" prop="phone">
                 <el-input v-model="formData.phone" placeholder="请输入" />
               </el-form-item>
-              <el-form-item label="邮箱" prop="email">
-                <el-input v-model="formData.email" placeholder="请输入" />
+              <el-form-item label="邮箱" prop="email" >
+                <el-input v-model="formData.email" placeholder="请输入" maxlength="40" />
               </el-form-item>
             </div>
           </div>
@@ -297,7 +293,7 @@ const resetForm = (formEl: FormInstance | undefined) => {
             </div>
             <div class="apply-info">
               <el-form-item label="加入原因" prop="reason">
-                <el-input v-model="formData.reason" type="textarea" :rows="10" placeholder="请输入" />
+                <el-input v-model="formData.reason" type="textarea" :rows="10" placeholder="请输入" maxlength="500"/>
               </el-form-item>
             </div>
           </div>
@@ -308,7 +304,7 @@ const resetForm = (formEl: FormInstance | undefined) => {
             </div>
             <div class="apply-info">
               <el-form-item label="自我介绍" prop="introduce">
-                <el-input v-model="formData.introduce" type="textarea" :rows="10" placeholder="请输入" />
+                <el-input v-model="formData.introduce" type="textarea" :rows="10" placeholder="请输入" maxlength="500"/>
               </el-form-item>
             </div>
           </div>
