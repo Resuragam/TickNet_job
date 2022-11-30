@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { FormInstance, FormRules } from 'element-plus'
 import { ElMessage, ElMessageBox } from 'element-plus'
+import { Dialog, Toast } from 'vant'
 import { findStatus, submitData } from '~/api'
 const route = useRoute()
 const job = reactive([
@@ -133,6 +134,7 @@ const rules = reactive<FormRules>({
   ],
   number: [
     { required: true, message: '请输入学号', trigger: 'blur' },
+    { min: 10, max: 10, message: '请输入学号', trigger: 'blur' },
   ],
   grade: [
     { required: true, message: '请选择年级', trigger: 'change' },
@@ -142,6 +144,7 @@ const rules = reactive<FormRules>({
   ],
   phone: [
     { required: true, message: '请输入电话号码', trigger: 'blur' },
+    { min: 11, max: 11, message: '请输入电话号码', trigger: 'blur' },
   ],
   email: [
     { required: true, message: '请输入邮箱', trigger: 'blur' },
@@ -162,7 +165,7 @@ const onSubmit = async (formEl: FormInstance | undefined) => {
       findStatus({
         number: formData.number,
       }).then((res: any) => {
-        // console.log(res)
+        console.warn('检测结果', res)
         if (res.code === 300) {
           submitData({
             name: formData.name,
@@ -177,67 +180,34 @@ const onSubmit = async (formEl: FormInstance | undefined) => {
             introduce: formData.introduce,
           }).then((res: any) => {
             if (res.code === 200) {
-              ElMessage({
-                showClose: true,
-                message: res.msg,
-                type: 'success',
-              })
+              Toast.success('提交成功')
             }
-            else {
-              ElMessage({
-                showClose: true,
-                message: res.msg,
-                type: 'warning',
-              })
-            }
-            console.warn(res, '提交成功')
+            else
+              Toast.fail(res.msg)
           })
         }
         else if (res.code === 301) {
-          ElMessage({
-            showClose: true,
-            message: res.msg,
-            type: 'warning',
-          })
-          ElMessageBox.confirm(
-            '是否覆盖之前的提交记录',
-            {
-              confirmButtonText: '确认',
-              cancelButtonText: '取消',
-              type: 'warning',
-            },
-          )
-            .then(() => {
-              submitData({
-                name: formData.name,
-                sex: formData.sex,
-                number: formData.number,
-                grade: formData.grade,
-                major: formData.major,
-                phone: formData.phone,
-                email: formData.email,
-                post: jobInfo.name,
-                reason: jobInfo.name,
-                introduce: formData.introduce,
-              }).then((res: any) => {
-                if (res.code === 200) {
-                  ElMessage({
-                    showClose: true,
-                    message: res.msg,
-                    type: 'success',
-                  })
-                }
-                else {
-                  ElMessage({
-                    showClose: true,
-                    message: res.msg,
-                    type: 'warning',
-                  })
-                }
-                console.warn(res, '提交成功')
-              })
+          Dialog.confirm({
+            message: '是否覆盖之前的提交信息？',
+          }).then(() => {
+            submitData({
+              name: formData.name,
+              sex: formData.sex,
+              number: formData.number,
+              grade: formData.grade,
+              major: formData.major,
+              phone: formData.phone,
+              email: formData.email,
+              post: jobInfo.name,
+              reason: jobInfo.name,
+              introduce: formData.introduce,
+            }).then((res: any) => {
+              if (res.code === 200)
+                Toast.success('提交成功')
+              else
+                Toast.fail(res.msg)
             })
-            .catch(() => {})
+          }).catch(() => {})
         }
       })
     }
@@ -248,7 +218,8 @@ const onSubmit = async (formEl: FormInstance | undefined) => {
 }
 
 const resetForm = (formEl: FormInstance | undefined) => {
-  if (!formEl) return
+  if (!formEl)
+    return
   formEl.resetFields()
 }
 </script>
@@ -263,10 +234,10 @@ const resetForm = (formEl: FormInstance | undefined) => {
         <van-tag v-for="gradeItem in jobInfo.grade" :key="gradeItem" type="primary" size="large" plain class="mr-1rem tag1">
           {{ gradeItem }}
         </van-tag>
-        <van-tag v-if="jobInfo.isDevelop" type="primary" size="large" plain class="mr-1rem" >
+        <van-tag v-if="jobInfo.isDevelop" type="primary" size="large" plain class="mr-1rem">
           研发组
         </van-tag>
-        <van-tag v-if="jobInfo.isOperate" type="primary" size="large" plain class="mr-1rem" >
+        <van-tag v-if="jobInfo.isOperate" type="primary" size="large" plain class="mr-1rem">
           运营组
         </van-tag>
         <el-form
@@ -283,31 +254,39 @@ const resetForm = (formEl: FormInstance | undefined) => {
             </div>
             <div class="apply-info">
               <el-form-item label="姓名" prop="name">
-                <el-input v-model="formData.name" placeholder="请输入"/>
+                <el-input v-model="formData.name" placeholder="请输入" />
               </el-form-item>
               <el-form-item label="性别" prop="sex">
                 <el-radio-group v-model="formData.sex">
-                  <el-radio label="男" size="large">男</el-radio>
-                  <el-radio label="女" size="large">女</el-radio>
+                  <el-radio label="男" size="large">
+                    男
+                  </el-radio>
+                  <el-radio label="女" size="large">
+                    女
+                  </el-radio>
                 </el-radio-group>
               </el-form-item>
               <el-form-item label="年级" prop="grade">
                 <el-radio-group v-model="formData.grade">
-                  <el-radio label="22级" size="large">22级</el-radio>
-                  <el-radio label="21级" size="large">21级</el-radio>
+                  <el-radio label="22级" size="large">
+                    22级
+                  </el-radio>
+                  <el-radio label="21级" size="large">
+                    21级
+                  </el-radio>
                 </el-radio-group>
               </el-form-item>
               <el-form-item label="学号" prop="number">
-                <el-input v-model="formData.number" placeholder="请输入"/>
+                <el-input v-model="formData.number" placeholder="请输入" />
               </el-form-item>
               <el-form-item label="专业" prop="major">
-                <el-input v-model="formData.major" placeholder="请输入"/>
+                <el-input v-model="formData.major" placeholder="请输入" />
               </el-form-item>
               <el-form-item label="电话号码" prop="phone">
-                <el-input v-model="formData.phone" placeholder="请输入"/>
+                <el-input v-model="formData.phone" placeholder="请输入" />
               </el-form-item>
               <el-form-item label="邮箱" prop="email">
-                <el-input v-model="formData.email" placeholder="请输入"/>
+                <el-input v-model="formData.email" placeholder="请输入" />
               </el-form-item>
             </div>
           </div>
@@ -318,7 +297,7 @@ const resetForm = (formEl: FormInstance | undefined) => {
             </div>
             <div class="apply-info">
               <el-form-item label="加入原因" prop="reason">
-                <el-input v-model="formData.reason" type="textarea" :rows="10" placeholder="请输入"/>
+                <el-input v-model="formData.reason" type="textarea" :rows="10" placeholder="请输入" />
               </el-form-item>
             </div>
           </div>
@@ -329,13 +308,17 @@ const resetForm = (formEl: FormInstance | undefined) => {
             </div>
             <div class="apply-info">
               <el-form-item label="自我介绍" prop="introduce">
-                <el-input v-model="formData.introduce" type="textarea" :rows="10" placeholder="请输入"/>
+                <el-input v-model="formData.introduce" type="textarea" :rows="10" placeholder="请输入" />
               </el-form-item>
             </div>
           </div>
           <el-form-item class="apply-button-box">
-            <el-button type="primary" round size="large" @click="onSubmit(ruleFormRef)" >提交申请</el-button>
-            <el-button round size="large" @click="resetForm(ruleFormRef)">重置表单</el-button>
+            <el-button type="primary" round size="large" @click="onSubmit(ruleFormRef)">
+              提交申请
+            </el-button>
+            <el-button round size="large" @click="resetForm(ruleFormRef)">
+              重置表单
+            </el-button>
           </el-form-item>
         </el-form>
       </div>
